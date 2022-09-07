@@ -1,5 +1,11 @@
 package com.lemzeeyyy.countries.model;
 
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -41,5 +47,6 @@ public class CountryModel {
     public void setStates(Object states) {
         this.states = states;
     }
+
 
 }

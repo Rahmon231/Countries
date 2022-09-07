@@ -1,10 +1,12 @@
 package com.lemzeeyyy.countries;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.lemzeeyyy.countries.adapter.CountryAdapter;
 import com.lemzeeyyy.countries.model.CountryModel;
 import com.lemzeeyyy.countries.model.Result;
 import com.lemzeeyyy.countries.service.GetCountryDataService;
@@ -18,11 +20,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<CountryModel> countries;
+    private RecyclerView recyclerView;
+    private CountryAdapter countryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         getCountries();
     }
 
@@ -35,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
                 Result result = response.body();
                 if(result!=null && result.getResult() != null){
                     countries = (ArrayList<CountryModel>) result.getResult();
-                    for (CountryModel c :
-                            countries) {
-                        Log.d("TAG", "onResponse: "+c.getName());
-                    }
+//                    for (CountryModel c :
+//                            countries) {
+//                        Log.d("TAG", "onResponse: "+c.getName());
+//                    }
+                    viewData();
                 }
             }
 
@@ -48,5 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return countries;
+    }
+
+    private void viewData() {
+        recyclerView = findViewById(R.id.recycler_view);
+        countryAdapter = new CountryAdapter(countries);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(countryAdapter);
     }
 }
